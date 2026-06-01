@@ -12,7 +12,19 @@ Este arquivo descreve os comandos personalizados e o que eles fazem. Use-o como 
 - **Uso:** `atualizar_tudo: Implementar nova tela de menu`
 - **Descrição:** use sempre que quiser registrar o motivo da alteração.
 
+## salvar_local
+- **O que faz:** adiciona todos os arquivos modificados e cria um commit apenas no diretório local.
+- **Uso:** `salvar_local` ou `salvar_local: mensagem do commit`
+- **Descrição:** não faz push para o GitHub; apenas salva a alteração no histórico local.
+
+## salvar_web
+- **O que faz:** adiciona todos os arquivos modificados, cria um commit e envia para o GitHub.
+- **Uso:** `salvar_web` ou `salvar_web: mensagem do commit`
+- **Descrição:** salva localmente e atualiza o repositório remoto em seguida.
+
 ## Observações
-- O comando `atualizar_tudo` deve ser usado após testar e verificar que o código está funcionando.
+- O comando `atualizar_tudo` continua disponível como atalho para salvar e enviar para o GitHub.
+- Use `salvar_local` quando quiser apenas salvar o histórico local e não enviar imediatamente.
+- Use `salvar_web` quando quiser salvar localmente e atualizar o GitHub em seguida.
 - Caso haja conflitos entre o repositório local e o remoto, será necessário resolver e sincronizar manualmente.
-- O GitHub será atualizado automaticamente depois que o push for executado com sucesso.
+- O GitHub será atualizado automaticamente depois que o push for executado com sucesso com `salvar_web` ou `atualizar_tudo`.
