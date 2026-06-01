@@ -1,0 +1,1185 @@
+PROJETO DE SISTEMA DE JOGOS EM PYTHON
+-------------------------------------------
+
+O projeto deve evoluir gradualmente ao longo do desenvolvimento.
+
+O foco principal não é criar todas as funcionalidades imediatamente, mas sim construir o sistema passo a passo, mantendo organização, simplicidade e facilidade de manutenção.
+
+O sistema é pensado para funcionar inicialmente em console, com compatibilidade futura para:
+- Windows
+- Linux
+- Mac
+- plataformas web que suportem Python
+
+Durante o desenvolvimento:
+- não criar funções desnecessárias
+- não criar arquivos desnecessários
+- não criar lógica prematura
+- não criar variáveis desnecessárias
+- não criar laços desnecessários
+- não criar comentários redundantes
+- não criar abstrações prematuras
+- não criar sistemas genéricos sem necessidade real
+- não criar estruturas baseadas em possibilidades futuras
+- não realizar otimizações prematuras
+- não adicionar complexidade desnecessária
+
+Sempre analisar se determinada implementação:
+- é realmente necessária naquele momento
+- pode ser criada futuramente
+- já possui alguma estrutura existente reutilizável
+- realmente já faz parte das regras atuais do sistema
+- resolve um problema real do projeto
+- possui uma solução mais simples
+
+O desenvolvimento será feito:
+- tela por tela
+- sistema por sistema
+- jogo por jogo
+
+O desenvolvimento deve priorizar:
+- simplicidade
+- organização
+- clareza
+- legibilidade
+- separação correta das responsabilidades
+- facilidade de manutenção
+- crescimento gradual
+- baixo acoplamento
+- evolução sustentável do sistema
+
+-------------------------------------------
+    PRINCÍPIOS DA ARQUITETURA
+
+Cada arquivo deve possuir sua própria responsabilidade.
+
+Deve existir separação entre:
+- sistema global
+- regras específicas de cada jogo
+
+Cada jogo deve possuir sua própria pasta contendo:
+- lógica
+- visual
+- partida
+- configurações
+- regras específicas
+
+Os sistemas globais devem ficar separados dos sistemas específicos dos jogos.
+
+Inicialmente o foco é manter a separação organizada entre:
+- jogo
+- partida
+- lógica
+- visual
+- configuração
+
+As responsabilidades podem evoluir conforme o crescimento do projeto.
+
+Os nomes de arquivos, módulos e pastas mostrados nesta documentação são apenas exemplos ilustrativos.
+
+Os nomes reais podem mudar durante o desenvolvimento.
+
+O mais importante é manter:
+- separação de responsabilidades
+- organização modular
+- padronização do projeto
+- baixo acoplamento entre módulos
+- clareza arquitetural
+- facilidade de evolução futura
+
+Evitar:
+- dependências circulares entre módulos
+- acoplamento excessivo
+- arquivos com múltiplas responsabilidades
+- mistura de interface com lógica
+- mistura de persistência com regras do jogo
+
+Os sistemas globais não devem depender diretamente
+das regras específicas dos jogos.
+
+Os jogos podem utilizar os sistemas globais,
+mas os sistemas globais devem permanecer desacoplados
+das implementações específicas dos jogos.
+-------------------------------------------
+	SEPARAÇÃO ENTRE INTERFACE E LÓGICA
+
+O sistema deve manter separação clara entre:
+- interface
+- entrada de dados
+- exibição visual
+- processamento interno
+- regras dos jogos
+
+Inicialmente o projeto funcionará em console.
+Porém, toda a arquitetura deve permanecer preparada
+para futura evolução para:
+- interfaces gráficas
+- botões interativos
+- janelas
+- aplicações web
+- múltiplas plataformas
+
+Por esse motivo:
+- a lógica do sistema não deve depender diretamente do console
+- regras dos jogos não devem utilizar `input()`
+- regras dos jogos não devem utilizar `print()`
+- regras internas não devem depender de menus do terminal
+- a lógica não deve controlar elementos visuais
+- a lógica não deve depender da tecnologia da interface
+
+O console deve funcionar apenas como:
+- camada de interface
+- captura de entrada do usuário
+- exibição de informações
+- navegação visual temporária
+
+A lógica do sistema deve:
+- receber dados
+- processar regras
+- retornar resultados
+- permanecer independente da interface utilizada
+
+
+Exemplo incorreto:
+def validar():
+    numero = input("Digite um número: ")
+
+    if numero == "5":
+        print("Acertou")
+
+Problemas deste modelo:
+- lógica depende diretamente do terminal
+- dificulta reutilização
+- dificulta manutenção
+- dificulta migração futura para GUI
+- dificulta migração futura para web
+
+Exemplo correto:
+def validar(numero):
+    return numero == "5"
+
+
+Neste modelo:
+- a lógica permanece desacoplada
+- a interface controla entrada de dados
+- a interface controla exibição das mensagens
+- o sistema pode reutilizar a mesma lógica em:
+
+  - console
+  - interface gráfica
+  - aplicações web
+  - futuras plataformas
+
+A interface deve possuir responsabilidade apenas por:
+- capturar ações do usuário
+- enviar dados para a lógica
+- exibir resultados retornados pelo sistema
+- controlar navegação visual
+
+As regras internas devem permanecer independentes
+da tecnologia visual utilizada pelo projeto.
+
+A arquitetura deve permitir que futuras interfaces
+possam ser adicionadas sem necessidade de alterar:
+
+- regras dos jogos
+- lógica interna
+- sistema de usuários
+- persistência
+- regras das partidas
+- regras de moedas
+- sistema de ranking
+
+O objetivo principal é garantir:
+- baixo acoplamento
+- facilidade de manutenção
+- reutilização da lógica
+- evolução sustentável do sistema
+- compatibilidade futura com interfaces gráficas
+
+Evitar:
+- lógica misturada com interface
+- regras utilizando `print()`
+- regras utilizando `input()`
+- jogos dependendo diretamente do terminal
+- navegação espalhada entre múltiplos sistemas
+- código visual misturado com processamento interno
+
+Toda interface futura deve funcionar apenas como:
+- camada visual
+- camada de interação
+- camada de navegação
+- camada de comunicação com o usuário
+
+Enquanto:
+- a lógica
+- as regras
+- os sistemas internos
+
+devem permanecer desacoplados da interface.
+-------------------------------------------
+	CONTROLE DE NAVEGAÇÃO E INTERFACE
+
+O sistema funcionará inicialmente em console,
+utilizando menus baseados em opções escolhidas pelo usuário.
+
+Exemplo:
+
+1 - Login
+2 - Criar Usuário
+3 - Sair
+
+Esse modelo é válido para o projeto atual
+e não representa acoplamento incorreto com o console.
+
+A utilização de:
+
+- números
+- menus
+- opções digitadas
+- escolhas do usuário
+
+faz parte apenas da interface atual do sistema.
+
+A arquitetura deve permitir que,
+futuramente, o console possa ser substituído por:
+- botões interativos
+- janelas gráficas
+- interfaces web
+- outras formas de interação
+
+sem necessidade de alterar:
+- regras dos jogos
+- lógica interna
+- persistência
+- sistema de usuários
+- rankings
+- moedas
+- regras das partidas
+
+A diferença entre as interfaces deve existir apenas
+na forma como o usuário interage com o sistema.
+
+Exemplo no console:
+	- usuário digita:
+	  1
+
+	- A interface interpreta:
+	  abrir tela de login
+
+Exemplo em interface gráfica futura:
+	- usuário clica no botão:
+  	  "Login"
+
+	- A interface interpreta:
+	  abrir tela de login
+
+Nos dois casos:
+- a ação interna continua sendo a mesma
+- apenas a forma de interação muda
+
+
+As regras internas do sistema não devem:
+- depender diretamente do terminal
+- utilizar `input()`
+- utilizar `print()`
+- controlar elementos visuais
+- depender de menus específicos da interface
+
+A interface deve possuir responsabilidade apenas por:
+- exibir informações
+- capturar ações do usuário
+- enviar ações para o sistema
+- apresentar os resultados retornados
+
+As telas não devem possuir navegação espalhada
+ou dependência direta entre si.
+
+Exemplo incorreto:
+def tela_login():
+    tela_menu()
+
+Esse modelo aumenta:
+- acoplamento
+- dependência entre telas
+- dificuldade de manutenção
+- dificuldade de adaptação futura para GUI
+
+O ideal é que cada tela:
+- execute apenas sua responsabilidade
+- processe a interação atual
+- retorne o próximo fluxo do sistema
+
+Exemplo conceitual:
+def tela_login():
+    return "menu"
+
+Neste modelo:
+- a tela não controla diretamente outra tela
+- a navegação permanece organizada
+- o sistema continua desacoplado da interface
+
+O fluxo principal do sistema poderá futuramente
+ser controlado por um sistema central de navegação,
+responsável por:
+- troca de telas
+- fluxo da aplicação
+- estado atual do sistema
+- controle geral da navegação
+
+Esse sistema poderá evoluir gradualmente
+conforme a necessidade real do projeto.
+O objetivo principal é garantir que:
+- o console seja apenas uma interface temporária
+- a lógica permaneça reutilizável
+- as regras continuem desacopladas
+- futuras interfaces possam ser adicionadas sem necessidade de reescrever o sistema interno
+
+Assim:
+- o console será apenas uma forma de interação
+- botões serão apenas outra forma de interação
+ a lógica continuará reutilizável em qualquer interface
+-------------------------------------------
+    ESTRUTURA BASE DO PROJETO
+
+A estrutura apresentada abaixo possui caráter
+apenas ilustrativo e conceitual.
+
+O objetivo principal é demonstrar:
+- organização modular
+- separação de responsabilidades
+- divisão entre sistemas globais e jogos
+- possível estrutura inicial do projeto
+
+Os nomes de:
+- arquivos
+- pastas
+- módulos
+- funções
+- sistemas
+
+podem ser alterados futuramente conforme:
+- evolução do projeto
+- necessidade real
+- aumento da complexidade
+- melhorias arquiteturais
+- reorganização do sistema
+- padronização adotada durante o desenvolvimento
+
+A estrutura não deve ser considerada fixa,
+definitiva ou obrigatória.
+
+Ela serve apenas como referência inicial
+para demonstrar a organização esperada do sistema.
+
+Exemplo ilustrativo:
+
+├── jogos
+│   ├── adivinhacao
+│   │
+│   │   ├── jogo_adivinha.py
+│   │   ├── partida_adivinha.py
+│   │   ├── logica_adivinha.py
+│   │   ├── visual_adivinha.py
+│   │   ├── configuracoes_adivinha.py
+│   │
+│   ├── futuro_jogo
+│   │
+│   │   ├── jogo_futuro.py
+│   │   ├── partida_futuro.py
+│   │   ├── logica_futuro.py
+│   │   ├── visual_futuro.py
+│   │   ├── configuracoes_futuro.py
+│
+│   ├── logica_jogos.py
+│   ├── visual_jogos.py
+│   ├── configuracoes_jogos.py
+│
+├── sistema
+│   ├── login.py
+│   ├── usuarios.py
+│   ├── ranking.py
+│   ├── moedas.py
+│
+├── logica_global.py
+├── visual_global.py
+├── configuracao_global.py
+│
+├── credito
+│   ├── credito.py
+
+A estrutura poderá evoluir gradualmente conforme:
+- aumento da complexidade
+- necessidade real de separação
+- reutilização consistente
+- crescimento do sistema
+
+Pequenos jogos inicialmente podem possuir menos arquivos,
+desde que mantenham organização e clareza.
+
+Novas separações, módulos e reorganizações
+devem surgir apenas quando houver necessidade real.
+
+O foco principal deve continuar sendo:
+- clareza
+- simplicidade
+- organização
+- baixo acoplamento
+- facilidade de manutenção
+- evolução gradual do sistema
+-------------------------------------------
+
+    FLUXO PRINCIPAL DO SISTEMA
+
+O sistema deve seguir um fluxo de navegação padronizado entre as telas.
+
+Fluxo principal:
+
+Inicial
+    → Login
+        → Menu
+            → Jogos
+                → Partida
+                    → Resultado
+                        → Jogos
+                            → Menu
+
+Fluxo alternativo:
+
+Inicial
+    → Criar Usuário
+        → Login
+            → Menu
+
+Fluxo de saída:
+
+Menu
+    → Sair
+        → Login
+
+Login
+    → Falha 3 vezes
+        → Inicial
+
+Partida
+    → Jogar novamente
+        → Nova Partida
+
+Partida
+    → Não jogar novamente
+        → Tela Jogos
+
+Tela Jogos
+    → Sair
+        → Menu
+
+Tela Créditos
+    → Sair
+        → Menu
+
+Tela Ranking
+    → Sair
+        → Menu
+
+Este fluxo serve como base inicial da navegação.
+
+Novas telas poderão ser adicionadas futuramente.
+
+O objetivo principal é manter:
+- navegação organizada
+- retorno consistente entre telas
+- experiência padronizada
+- baixo acoplamento
+- previsibilidade de navegação
+
+-------------------------------------------
+    REGRAS GERAIS DAS TELAS
+
+Toda tela deve possuir:
+- opção de sair
+- opção de voltar
+- navegação consistente
+
+As telas devem:
+- possuir comportamento previsível
+- evitar loops desnecessários
+- evitar múltiplas responsabilidades
+- manter consistência estrutural
+
+-------------------------------------------
+    TELA INICIAL
+
+A tela inicial deve possuir no mínimo:
+
+1 - Login
+Responsável por direcionar o jogador para a tela de login.
+
+2 - Criar Usuário
+Responsável pela criação de novos usuários.
+
+3 - Sair
+Fecha completamente o sistema.
+
+-------------------------------------------
+    TELA DE LOGIN
+
+O usuário terá no máximo 3 tentativas de login.
+
+Campos:
+- usuário
+- senha
+
+Regras:
+- se o usuário não existir:
+    - repetir tentativa
+- se a senha estiver incorreta:
+    - repetir tentativa
+- após 3 falhas:
+    - voltar para tela inicial
+
+Se o login estiver correto:
+- entrar no sistema
+
+-------------------------------------------
+    TELA CRIAR USUÁRIO
+
+Campos:
+- usuário
+- senha
+
+Regras:
+- se o usuário já existir:
+    - informar erro
+- se não existir:
+    - salvar usuário
+
+Senha:
+- mínimo de 4 caracteres
+- não existe obrigatoriedade de caracteres especiais
+
+Ao criar usuário:
+- iniciar com 10 moedas
+
+-------------------------------------------
+    TELA MENU
+
+Informações exibidas:
+- usuário
+- moedas
+
+Opções:
+
+1 - Jogos
+Abre a tela de jogos.
+
+2 - Créditos
+Abre a tela de créditos.
+
+3 - Ranking
+Abre a tela de ranking.
+
+4 - Sair
+Volta para tela de login.
+
+-------------------------------------------
+    TELA JOGOS
+
+Informações exibidas:
+- usuário
+- moedas
+
+Lista inicial de jogos:
+
+1 - Adivinhação
+2 - Forca
+3 - Charada
+4 - Sair
+
+Novos jogos poderão ser adicionados futuramente.
+
+Após finalizar uma partida:
+
+Pergunta:
+"Jogar novamente?"
+
+Se SIM:
+- inicia nova partida
+
+Se NÃO:
+- retorna para tela de jogos
+
+-------------------------------------------
+    TELA CRÉDITOS
+
+Informações exibidas:
+- usuário
+- moedas
+
+Exibe:
+- créditos do projeto
+
+Opções:
+1 - Sair
+Retorna ao menu.
+
+-------------------------------------------
+    TELA RANKING
+
+Mostra os 5 melhores resultados do jogador em cada jogo.
+
+Exemplo:
+
+Adivinhação
+- Fácil
+- Médio
+- Difícil
+
+Forca
+- Fácil
+- Médio
+- Difícil
+
+Cada dificuldade deve possuir:
+- top 5 resultados
+
+-------------------------------------------
+    TIPOS DE USUÁRIOS
+
+O usuário é global no sistema.
+
+Moedas, gastos, recordes e progressos devem funcionar globalmente entre todos os jogos.
+
+Inicialmente existirão 2 tipos de usuários:
+
+1 - Usuário Teste
+- já existe no sistema
+- possui mais moedas
+- utilizado para testes
+- possui vantagens para facilitar validações
+- não precisa ser criado manualmente
+
+O usuário teste deve ser criado automaticamente pelo sistema caso ele ainda não exista no banco de dados.
+
+Estrutura inicial esperada:
+
+{
+    "usuario": "teste",
+    "senha": "1234",
+    "moedas": 999,
+    "tipo": "teste"
+}
+
+Os valores poderão ser alterados futuramente conforme o balanceamento do sistema.
+
+2 - Usuário Comum
+- segue todas as regras normais do sistema
+- não possui vantagens especiais
+- respeita todas as regras dos jogos
+- precisa ser criado pelo jogador
+
+Estrutura inicial esperada:
+
+{
+    "usuario": "vitor",
+    "senha": "1234",
+    "moedas": 10,
+    "tipo": "comum"
+}
+
+-------------------------------------------
+
+    DADOS SALVOS DO USUÁRIO
+
+O sistema deve armazenar:
+- usuário
+- senha
+- moedas
+- rankings
+- recordes
+- dificuldades jogadas
+
+Os recordes devem ser separados:
+- por jogo
+- por dificuldade
+
+Exemplo de estrutura futura do usuário:
+
+{
+    "usuario": "vitor",
+    "senha": "1234",
+    "moedas": 10,
+    "tipo": "comum",
+
+    "ranking": {
+        "adivinhacao": {
+            "facil": [],
+            "medio": [],
+            "dificil": []
+        },
+
+        "forca": {
+            "facil": [],
+            "medio": [],
+            "dificil": []
+        }
+    }
+}
+
+A estrutura do usuário poderá evoluir conforme o crescimento do projeto.
+
+Novos campos poderão ser adicionados futuramente conforme necessário.
+
+-------------------------------------------
+
+    ESTRUTURA DO RANKING
+
+O sistema de ranking será desenvolvido gradualmente conforme o crescimento do projeto.
+
+Antes da implementação completa do ranking, o sistema ainda precisa possuir:
+- usuários
+- login
+- partidas
+- resultados dos jogos
+- salvamento de dados
+
+Inicialmente o foco principal deve continuar sendo:
+- organização do projeto
+- estrutura dos usuários
+- fluxo das telas
+- separação das responsabilidades
+- persistência básica utilizando JSON
+
+O ranking deverá funcionar separado:
+- por jogo
+- por dificuldade
+
+Cada jogo deverá possuir:
+- seus próprios recordes
+- suas próprias pontuações
+- seus próprios resultados
+
+Inicialmente o sistema deve armazenar apenas:
+- os 5 melhores resultados do jogador
+
+A estrutura completa do ranking poderá evoluir futuramente conforme a necessidade real do sistema.
+
+-------------------------------------------
+    BANCO DE DADOS
+
+Inicialmente o sistema utilizará arquivos JSON.
+
+Objetivos:
+- simplicidade
+- organização
+- aprendizado
+- facilidade de manutenção
+
+Exemplo:
+
+├── banco_dados
+│   ├── usuarios.json
+│   ├── ranking.json
+│   ├── configuracoes.json
+
+Os nomes dos arquivos são apenas exemplos.
+
+O sistema poderá futuramente:
+- reorganizar arquivos
+- separar novos dados
+- migrar para outro banco
+
+A manipulação dos arquivos JSON deve permanecer
+centralizada em um sistema responsável apenas pela persistência.
+
+Inicialmente o foco é evitar que múltiplos sistemas
+manipulem arquivos diretamente de forma espalhada pelo projeto.
+
+Exemplo incorreto:
+- login acessando JSON diretamente
+- ranking acessando JSON diretamente
+- jogos salvando arquivos diretamente
+- moedas manipulando arquivos diretamente
+
+Esse tipo de abordagem pode gerar:
+- repetição de código
+- dificuldade de manutenção
+- inconsistência de dados
+- aumento do acoplamento
+- dificuldade futura de reorganização
+
+O ideal é que os sistemas utilizem
+uma camada responsável apenas por:
+- carregar dados
+- salvar dados
+- criar arquivos necessários
+- validar existência básica dos arquivos
+
+Sem misturar:
+- regras de jogo
+- navegação
+- interface
+- lógica específica
+- comportamento das partidas
+
+Exemplo conceitual:
+
+sistema
+    ├── persistencia.py
+
+Responsável por:
+- leitura de arquivos
+- escrita de arquivos
+- carregamento de dados
+- salvamento de dados
+
+Os demais sistemas devem utilizar
+a persistência de forma indireta,
+evitando acesso direto aos arquivos.
+
+A estrutura da persistência poderá evoluir futuramente conforme:
+- aumento da complexidade
+- necessidade real de separação
+- crescimento do banco de dados
+- reorganização do sistema
+
+Inicialmente não existe necessidade de:
+- bancos SQL
+- ORMs
+- arquiteturas complexas
+- abstrações avançadas
+- sistemas excessivamente genéricos
+
+O foco atual deve continuar sendo:
+- funcionamento correto
+- clareza
+- simplicidade
+- organização
+- separação adequada das responsabilidades
+-------------------------------------------
+    DIFICULDADES
+
+Inicialmente existirão 3 dificuldades:
+- Fácil
+- Médio
+- Difícil
+
+O sistema deve permitir expansão futura para novas dificuldades.
+
+Tabela base:
+
+| Dificuldade | Tentativas Base |
+| ----------- | ---------------- |
+| Fácil       | 10               |
+| Médio       | 7                |
+| Difícil     | 5                |
+
+-------------------------------------------
+    MOEDAS
+
+Ao criar usuário:
+- iniciar com 10 moedas
+
+As moedas:
+- são globais
+- podem ser utilizadas em qualquer jogo
+
+O sistema não terá loja inicialmente.
+
+As moedas serão obtidas:
+- através das vitórias nos jogos
+
+O jogador poderá:
+- comprar vida apenas 1 vez por partida
+
+Tabela de balanceamento:
+
+| Dificuldade | Compra de Vida | Vidas Recebidas | Recompensa Sem Comprar Vida | Recompensa Comprando Vida |
+| ----------- | --------------- | ---------------- | --------------------------- | ------------------------- |
+| Fácil       | 2 moedas        | +1 tentativa     | +3 moedas                   | +2 moedas                 |
+| Médio       | 3 moedas        | +1 tentativa     | +5 moedas                   | +4 moedas                 |
+| Difícil     | 4 moedas        | +2 tentativas    | +8 moedas                   | +6 moedas                 |
+
+-------------------------------------------
+    CONTROLE DA PROGRAMAÇÃO
+
+O desenvolvimento deve priorizar:
+- simplicidade
+- organização
+- clareza
+- legibilidade
+- separação correta das responsabilidades
+- facilidade de manutenção
+- crescimento gradual do projeto
+
+Nunca criar:
+- arquivos desnecessários
+- funções desnecessárias
+- lógica prematura
+- variáveis desnecessárias
+- comentários redundantes
+- abstrações prematuras
+- sistemas genéricos sem necessidade real
+- otimizações antecipadas
+- complexidade desnecessária
+
+Nunca realizar:
+- suposições sobre funcionalidades futuras
+- implementações baseadas em possibilidades
+- estruturas preparadas sem necessidade real
+- validações de sistemas ainda inexistentes
+- regras hipotéticas não definidas
+- comportamentos presumidos sem documentação
+
+Sempre verificar:
+- reutilização de código
+- necessidade real da implementação
+- organização do sistema
+- separação correta das responsabilidades
+- clareza do código
+- facilidade de manutenção futura
+- se a implementação realmente já faz parte
+  das regras atuais do sistema
+
+-------------------------------------------
+
+Comentários devem existir apenas quando:
+- explicarem decisões importantes
+- explicarem regras não óbvias
+- evitarem dúvidas futuras
+- documentarem comportamentos importantes
+
+Evitar comentários que apenas descrevem
+o que o código já demonstra claramente.
+
+Comentários devem explicar o motivo,
+e não apenas repetir o funcionamento do código.
+
+-------------------------------------------
+
+Funções devem possuir:
+- responsabilidade clara
+- objetivo específico
+- comportamento previsível
+
+Evitar funções excessivamente longas
+ou que misturem múltiplas responsabilidades.
+
+Se uma função começar a crescer demais,
+avaliar separação em funções menores.
+
+-------------------------------------------
+
+Cada arquivo deve possuir
+uma responsabilidade principal bem definida.
+
+Evitar arquivos que misturem:
+- interface
+- lógica
+- persistência
+- navegação
+- regras específicas dos jogos
+
+-------------------------------------------
+
+Evitar dependências circulares entre módulos.
+
+Sistemas globais não devem depender
+diretamente das regras específicas dos jogos.
+
+Os jogos devem utilizar os sistemas globais,
+mas os sistemas globais devem permanecer desacoplados
+das implementações específicas dos jogos.
+
+-------------------------------------------
+
+Não generalizar sistemas cedo demais.
+
+Reutilizações, abstrações e estruturas genéricas
+devem surgir apenas quando padrões reais
+aparecerem no desenvolvimento do projeto.
+
+Pequenas duplicações podem ser aceitáveis
+quando evitarem abstrações prematuras
+ou aumento desnecessário de complexidade.
+
+-------------------------------------------
+
+Não realizar suposições sobre funcionalidades,
+regras ou estruturas futuras do sistema.
+
+Implementações devem ser baseadas apenas
+em requisitos, comportamentos e necessidades
+já definidos no projeto.
+
+Antes de implementar qualquer comportamento,
+sempre validar se ele realmente já faz parte
+das regras atuais do sistema.
+
+-------------------------------------------
+
+Priorizar legibilidade e clareza
+ao invés de soluções excessivamente complexas,
+compactas ou difíceis de entender.
+
+O código deve ser fácil de:
+- ler
+- entender
+- modificar
+- manter futuramente
+
+-------------------------------------------
+
+Evitar valores fixos espalhados pelo sistema.
+
+Valores importantes devem possuir:
+- configuração
+- constante
+- estrutura centralizada
+
+Exemplo:
+- quantidade de moedas
+- tentativas
+- recompensas
+- custos
+- limites
+
+-------------------------------------------
+
+Não realizar otimizações prematuras.
+
+Primeiro garantir:
+- funcionamento correto
+- organização
+- clareza
+- estabilidade
+
+Otimizações devem acontecer apenas
+quando houver necessidade real identificada.
+
+-------------------------------------------
+
+A complexidade da solução deve ser proporcional
+ao tamanho real do problema.
+
+Evitar arquiteturas complexas
+para funcionalidades simples.
+
+O projeto deve evoluir gradualmente,
+acompanhando a necessidade real do sistema.
+
+-------------------------------------------
+
+Sempre analisar antes de implementar:
+- isso é realmente necessário agora?
+- o sistema atual já resolve esse problema?
+- a complexidade adicionada vale a pena?
+- existe uma solução mais simples?
+- essa separação realmente melhora o projeto?
+- isso pode ser implementado futuramente?
+- isso realmente já existe nas regras do projeto?
+- estou implementando algo real ou apenas supondo um cenário futuro?
+
+-------------------------------------------
+
+O foco principal do projeto deve continuar sendo:
+- aprendizado
+- organização
+- evolução gradual
+- separação correta das responsabilidades
+- baixo acoplamento
+- facilidade de manutenção
+- simplicidade arquitetural
+- crescimento sustentável do sistema
+
+-------------------------------------------
+
+	REGRAS DE CONTEXTO E IMPLEMENTAÇÃO DA IA
+
+A IA deve trabalhar exclusivamente
+com base no projeto atual e no código existente.
+
+Toda sugestão, implementação, correção,
+refatoração, organização ou modificação
+deve considerar apenas:
+
+- regras já definidas
+- estruturas já existentes
+- código realmente presente no projeto
+- comportamentos documentados
+- funcionalidades já implementadas
+- responsabilidades atuais do sistema
+
+A IA não deve:
+
+- supor existência de código
+- imaginar estruturas
+- presumir funcionalidades futuras
+- criar cenários hipotéticos
+- considerar comportamentos não documentados
+- assumir implementações inexistentes
+
+Evitar respostas contendo:
+
+- "provavelmente"
+- "talvez exista"
+- "acredito que"
+- "pode ser que"
+- "normalmente projetos possuem"
+- "geralmente isso fica em"
+- "imagino que seu sistema tenha"
+- qualquer forma de suposição sobre o projeto
+
+Toda análise deve ser baseada:
+
+- no código realmente enviado
+- na estrutura realmente existente
+- nas regras documentadas do projeto
+- nas implementações atuais do sistema
+
+Caso determinada estrutura:
+
+- não exista
+- não tenha sido criada
+- não tenha sido enviada
+- não esteja documentada
+
+a IA não deve:
+
+- inventar
+- presumir
+- inferir automaticamente
+- responder como se existisse
+
+A IA deve sempre:
+
+- respeitar a arquitetura atual do projeto
+- manter consistência com o sistema existente
+- reutilizar estruturas já implementadas
+- evitar criação desnecessária de novos sistemas
+- evitar alterações fora do escopo atual
+- manter coerência com as regras do projeto
+
+Implementações devem acontecer apenas:
+
+- dentro do contexto atual do sistema
+- dentro das regras existentes
+- dentro da estrutura real do projeto
+- dentro das responsabilidades já definidas
+
+A IA deve considerar que possui acesso completo
+ao projeto e ao código atual durante o desenvolvimento.
+
+Portanto:
+
+- não deve responder com hipóteses
+- não deve responder com suposições
+- não deve responder com possibilidades abstratas
+- não deve responder com cenários imaginários
+
+As respostas devem ser:
+
+- diretas
+- objetivas
+- consistentes com o projeto
+- alinhadas ao código existente
+- baseadas apenas em informações reais do sistema
