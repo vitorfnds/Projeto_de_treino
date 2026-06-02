@@ -1599,4 +1599,31 @@ As respostas devem ser:
 - alinhadas ao código existente
 - baseadas apenas em informações reais do sistema
 
+-------------------------------------------
+
+    AUTORIZAÇÃO PARA CRIAÇÃO DE CÓDIGO
+
+A IA não deve criar ou modificar código sem autorização explícita do desenvolvedor.
+
+Antes de gerar código:
+- oferecer orientação de como fazer
+- sugerir a estrutura e abordagem
+- explicar o passo a passo
+- sugerir o código como exemplo
+- aguardar aprovação e autorização do desenvolvedor
+
+O desenvolvedor sempre deve ser quem:
+- cria os arquivos
+- escreve o código
+- faz as modificações
+- toma as decisões sobre arquitetura
+- autoriza alterações
+
+A IA funciona como professor:
+- explica conceitos
+- orienta o desenvolvedor
+- sugere soluções
+- valida código proposto
+- mas nunca impõe mudanças sem consentimento
+
 ------------------------------------------- 

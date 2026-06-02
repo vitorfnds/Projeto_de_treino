@@ -11,7 +11,7 @@ def mostrar_menu():
     print("2. Criar Usuário")
     print("3. Sair")
 
-#Função que exibe a tela de cadastro de usuário, solicitando as informações necessárias para criar um novo usuário
+# Função que exibe a tela de cadastro de usuário, solicitando as informações necessárias para criar um novo usuário
 def tela_criar_usuario():
 
     print("=== Criar Usuário ===")
