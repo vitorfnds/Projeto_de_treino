@@ -22,6 +22,11 @@ Este arquivo descreve os comandos personalizados e o que eles fazem. Use-o como 
 - **Uso:** `salvar_web` ou `salvar_web: mensagem do commit`
 - **Descrição:** salva localmente e atualiza o repositório remoto em seguida.
 
+## add_cd
+- **O que faz:** sinaliza que uma alteração no código deve ser feita pelo assistente.
+- **Uso:** `add_cd`
+- **Descrição:** adicione esse comando antes de pedir qualquer modificação no código para evitar alterações não autorizadas.
+
 ## Observações
 - O comando `atualizar_tudo` continua disponível como atalho para salvar e enviar para o GitHub.
 - Use `salvar_local` quando quiser apenas salvar o histórico local e não enviar imediatamente.

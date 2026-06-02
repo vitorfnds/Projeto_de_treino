@@ -102,6 +102,7 @@ Durante o desenvolvimento:
 - não criar sistemas genéricos sem necessidade real
 - não realizar otimizações prematuras
 - não adicionar complexidade desnecessária
+- não modificar o código sem o comando `add_cd`
 
 Sempre analisar se determinada implementação:
 - é realmente necessária naquele momento

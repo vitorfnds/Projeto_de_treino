@@ -11,6 +11,7 @@ from validadores import validar_usuario, validar_senha
 # Usuários armazenados em memória.
 usuarios = {}
 
+# Normaliza o usuário para pesquisa sem case sensitive.
 def normalizar_usuario(usuario):
     return usuario.strip().lower()
 
