@@ -371,6 +371,26 @@ Exemplo:
 2 - Criar Usuário
 3 - Sair
 
+As telas do console devem ser apresentadas em uma caixa
+que se ajusta automaticamente ao tamanho do texto.
+O tamanho da caixa deve ser baseado na linha mais longa
+mais uma margem de espaçamento.
+
+Exemplo de tela dinâmica:
+
+    |------------------|
+    |    TELA LOGIN    |
+    |                  |
+    | 1) Fazer login   |
+    | 2) Criar Usuário |
+    | 3) Sair          |
+    |------------------|
+
+O título da tela deve permanecer alinhado e centralizado
+no topo da caixa, conforme o exemplo.
+Essa caixa deve crescer quando o texto interno for maior,
+sem quebrar a borda ou deixar linhas estourarem.
+
 Esse modelo é válido para o projeto atual
 e não representa acoplamento incorreto com o console.
 
